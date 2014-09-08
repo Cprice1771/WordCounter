@@ -11,7 +11,7 @@ namespace ConsoleApplication2
     {
         static void Main(string[] args)
         {
-            using (StreamReader reader = File.OpenText("Filename.txt"))
+            using (StreamReader reader = File.OpenText("TestFile.txt"))
             {
                 string file = reader.ReadToEnd();
                 string[] words = file.Split(' ');
@@ -24,10 +24,26 @@ namespace ConsoleApplication2
                         wordCount.Add(s, 1);
                 }
 
-                foreach (KeyValuePair<string, int> kvp in wordCount)
+
+                List<KeyValuePair<string, int>> wordList = wordCount.ToList();
+                wordList.Sort((firstPair, nextPair) =>
+                {
+                    if (firstPair.Value == nextPair.Value)
+                        return 0;
+                    else if (firstPair.Value > nextPair.Value)
+                        return -1;
+                    else
+                        return 1;
+                });
+                foreach (KeyValuePair<string, int> kvp in wordList)
                 {
                     Console.WriteLine(kvp.Key + ", " + kvp.Value.ToString());
                 }
+            }
+
+            //To keep the terminal open
+            while (true)
+            {
             }
 
             
